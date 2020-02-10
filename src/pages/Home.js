@@ -1,27 +1,31 @@
-import React from "react";
+import React, {Component} from "react";
+import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
 
-const Page1 = () => {
-  return (
-    <div className="flags">
-      <div className="page page1">
-        <div className="flagTop" />
-        <div className="flagCenter">
-          <h1 className="country">Argentina (PAGE 1)</h1>
+class Home extends Component {
+
+  callAPI() {
+    console.log("test")
+    fetch("http://20.43.176.165:5001/index")
+    .then(res => res.text())
+    .then(res => console.log(res));
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <p>
+            <Button onClick={this.callAPI}>API Call</Button>
+          </p>
           <Link to="/page1">Click to go to Page 1</Link>
-        </div>
-        <div className="flagBottom" />
+        </header>
+        <p className="App-intro"></p>
       </div>
-      <div className="page page2">
-        <div className="flagTop" />
-        <div className="flagCenter">
-          <h1 className="country">Nigeria (PAGE 2)</h1>
-          <Link to="/page2">Click to go to Page 2</Link>
-        </div>
-        <div className="flagBottom" />
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
-export default Page1;
+
+
+export default Home;
