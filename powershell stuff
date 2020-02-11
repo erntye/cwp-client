@@ -1,0 +1,11 @@
+$vaultName = "my-vault-name"
+$certificateName = "my-cert-name"
+$pfxPath = [Environment]::GetFolderPath("Desktop") + "\$certificateName.pfx"
+$password = "my-password"
+
+$pfxSecret = Get-AzureKeyVaultSecret -VaultName $vaultName -Name $certificateName
+$pfxUnprotectedBytes = [Convert]::FromBase64String($pfxSecret.SecretValueText)
+$pfx = New-Object -TypeName Security.Cryptography.X509Certificates.X509Certificate2($pfxUnprotectedBytes,$null)
+$pfx.PrivateKey.ExportParameters($true)
+$pfxProtectedBytes = $pfx.Export([Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, $password)
+[IO.File]::WriteAllBytes($pfxPath, $pfxProtectedBytes)

@@ -4,9 +4,16 @@ import { Link } from "react-router-dom";
 
 class Home extends Component {
 
-  callAPI() {
+  callHTTP() {
     console.log("test")
     fetch("http://20.43.176.165:5001/index")
+    .then(res => res.text())
+    .then(res => console.log(res));
+  };
+
+  callHTTPS() {
+    console.log("test")
+    fetch("https://20.43.176.165:5002/index")
     .then(res => res.text())
     .then(res => console.log(res));
   };
@@ -16,7 +23,10 @@ class Home extends Component {
       <div className="App">
         <header className="App-header">
           <p>
-            <Button onClick={this.callAPI}>API Call</Button>
+            <Button onClick={this.callHTTP}>HTTP Call</Button>
+          </p>
+          <p>
+            <Button onClick={this.callHTTPS}>HTTPS Call</Button>
           </p>
           <Link to="/page1">Click to go to Page 1</Link>
         </header>
