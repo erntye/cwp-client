@@ -18,31 +18,37 @@ class Page1 extends Component {
 
   componentDidMount() {
     axios
-      .get(https_add+'/api/website')
-      .then( res => {this.setState({ websites: res.data})})
+      .get(https_add + '/api/website')
+      .then(res => { this.setState({ websites: res.data }) })
       .catch(alert);
   }
-  
+
   render() {
-    const {websites} = this.state;
+    const { websites } = this.state;
     return (
       <div className="App">
         <NavBar></NavBar>
         <header className="App-header">
-          <WebsiteList websites={websites}></WebsiteList>
-          <Row>
-                <Col> <Button className="float-right"onClick={this.initializeWebsites}>Initialize</Button>      </Col>
-                <Col> <Button className="float-left" onClick={this.deleteAllWebsites}>Delete All</Button>      </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col> <Button className="float-right" variant ="outline-primary "onClick={this.callHTTP}>HTTP Call</Button>      </Col>
-                <Col> <Button className="float-left" onClick={this.callHTTPS}>HTTPS Call</Button>      </Col>
-          </Row>
-          <div >
-            <Link to="/page2">Page 2</Link>
-            <Link to="/">Home</Link>
-          </div>
+          <Container >
+            <Row >
+              <Col xs={{ span: 4, offset: 4 }}>
+                <WebsiteList websites={websites}></WebsiteList>
+              </Col>
+            </Row>
+            <Row>
+              <Col> <Button className="float-right" onClick={this.initializeWebsites}>Initialize</Button>      </Col>
+              <Col> <Button className="float-left" onClick={this.deleteAllWebsites}>Delete All</Button>      </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col> <Button className="float-right" variant="outline-primary " onClick={this.callHTTP}>HTTP Call</Button>      </Col>
+              <Col> <Button className="float-left" onClick={this.callHTTPS}>HTTPS Call</Button>      </Col>
+            </Row>
+            <div >
+              <Link to="/page2">Page 2</Link>
+              <Link to="/">Home</Link>
+            </div>
+          </Container>
         </header>
       </div>
     );
@@ -50,27 +56,27 @@ class Page1 extends Component {
   callHTTP = () => {
     console.log("http")
     fetch(http_add)
-    .then(res => res.text())
-    .then(res => console.log(`http ${res}`));
+      .then(res => res.text())
+      .then(res => console.log(`http ${res}`));
   };
 
   callHTTPS = () => {
     console.log("https")
     fetch(https_add)
-    .then(res => res.text())
-    .then(res => console.log(`https ${res}`));
+      .then(res => res.text())
+      .then(res => console.log(`https ${res}`));
   };
-  
+
   initializeWebsites = () => {
     const doInitialize = window.confirm('Do you want to initialize random data into DB?');
     if (!doInitialize) return;
     axios
-      .post(https_add+'/api/website/initialize')
-      .then( res => {
+      .post(https_add + '/api/website/initialize')
+      .then(res => {
         console.log(`${res.data}`)
         axios
           .get(https_add + '/api/website')
-          .then( res => this.setState({ websites: res.data}))
+          .then(res => this.setState({ websites: res.data }))
           .catch(alert)
       })
       .catch(alert)
@@ -80,8 +86,8 @@ class Page1 extends Component {
     const doDelete = window.confirm('Do you want to delete all data from DB?');
     if (!doDelete) return;
     axios
-      .delete(https_add+'/api/website/all')
-      .then( res => this.setState({websites: []}))
+      .delete(https_add + '/api/website/all')
+      .then(res => this.setState({ websites: [] }))
       .catch(err => alert(`failed to delete all ${JSON.stringify(err)}`))
   };
 

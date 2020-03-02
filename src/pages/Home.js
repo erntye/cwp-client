@@ -29,7 +29,7 @@ class Home extends Component {
   componentDidMount() {
     axios
       .get(https_add + '/api/website')
-      .then(res => { console.log('mounted'); this.setState({ websites: res.data }) })
+      .then(res => { this.setState({ websites: res.data }) })
       .catch(alert);
   }
 
