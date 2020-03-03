@@ -44,6 +44,15 @@ class Page1 extends Component {
               <Col> <Button className="float-right" variant="outline-primary " onClick={this.callHTTP}>HTTP Call</Button>      </Col>
               <Col> <Button className="float-left" onClick={this.callHTTPS}>HTTPS Call</Button>      </Col>
             </Row>
+            <br />
+            <Row>
+              <Col> <Button className="float-right" variant="outline-primary " onClick={this.callLBHTTP}>LB HTTP Call</Button>      </Col>
+              <Col> <Button onClick={this.callLBHTTPS}>LB HTTPS Call</Button>      </Col>
+              <Col> <Button onClick={this.callLBHTTPS2}>LB HTTPS Call 2</Button>      </Col>
+              <Col> <Button onClick={this.callLBHTTPS3}>LB HTTPS Call 3</Button>      </Col>
+
+
+            </Row>
             <div >
               <Link to="/page2">Page 2</Link>
               <Link to="/">Home</Link>
@@ -65,6 +74,41 @@ class Page1 extends Component {
     fetch(https_add)
       .then(res => res.text())
       .then(res => console.log(`https ${res}`));
+  };
+  callLBHTTP = () => {
+    console.log("lb http")
+    fetch('http://10.0.0.200:5001')
+      .then(res => res.text())
+      .then(res => console.log(`lb http ${res}`));
+  };
+
+  callLBHTTPS = () => {
+    console.log("lb https")
+    fetch('https://10.0.0.200:5002')
+      .then(res => res.text())
+      .then(res => console.log(`lb https ${res}`))
+      .catch(e => console.log(e));
+  };
+  callLBHTTPS2 = () => {
+    console.log("lb https 2")
+    fetch('https://10.0.0.200:5002', {credentials:'omit'})
+      .then(res => res.text())
+      .then(res => console.log(`lb https 2${res}`))
+      .catch(e => console.log(e));
+  };
+
+  callLBHTTPS3= () => {
+    var request = require('request')
+    var https = require('https')
+    var agentOptions = { rejectUnauthorized: false }
+    var agent = new https.Agent(agentOptions)
+    request({
+      url: 'https://10.0.0.200:5002',
+      method: 'GET',
+      agent: agent
+    }, (err, resp, body) => {
+        console.log(err, resp, body)
+    })
   };
 
   initializeWebsites = () => {
