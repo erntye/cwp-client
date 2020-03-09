@@ -77,37 +77,42 @@ class Page1 extends Component {
   };
   callLBHTTP = () => {
     console.log("lb http")
-    fetch('http://10.0.0.200:5001')
+    fetch('http://10.0.1.200:5001')
       .then(res => res.text())
-      .then(res => console.log(`lb http ${res}`));
+      .then(res => console.log(`lb http ${res}`))
+      .catch(e => console.log(e));
   };
 
   callLBHTTPS = () => {
     console.log("lb https")
-    fetch('https://10.0.0.200:5002')
+    fetch('https://10.0.1.200:5002')
       .then(res => res.text())
       .then(res => console.log(`lb https ${res}`))
       .catch(e => console.log(e));
   };
   callLBHTTPS2 = () => {
     console.log("lb https 2")
-    fetch('https://10.0.0.200:5002', {credentials:'omit'})
+    const https = require('https')
+    const agent = new https.Agent({
+      rejectUnauthorized: false
+    })
+    fetch('https://10.0.1.200:5002', { agent })
       .then(res => res.text())
       .then(res => console.log(`lb https 2${res}`))
       .catch(e => console.log(e));
   };
 
-  callLBHTTPS3= () => {
+  callLBHTTPS3 = () => {
     var request = require('request')
     var https = require('https')
     var agentOptions = { rejectUnauthorized: false }
     var agent = new https.Agent(agentOptions)
     request({
-      url: 'https://10.0.0.200:5002',
+      url: 'https://10.0.1.200:5002',
       method: 'GET',
       agent: agent
     }, (err, resp, body) => {
-        console.log(err, resp, body)
+      console.log(err, resp, body)
     })
   };
 
