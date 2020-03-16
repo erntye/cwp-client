@@ -1,7 +1,7 @@
-$vaultName = "my-vault-name"
-$certificateName = "my-cert-name"
+$vaultName = "cwpprotokeyvault"
+$certificateName = "mycert"
 $pfxPath = [Environment]::GetFolderPath("Desktop") + "\$certificateName.pfx"
-$password = "my-password"
+$password = "password123"
 
 $pfxSecret = Get-AzureKeyVaultSecret -VaultName $vaultName -Name $certificateName
 $pfxUnprotectedBytes = [Convert]::FromBase64String($pfxSecret.SecretValueText)

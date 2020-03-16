@@ -43,6 +43,8 @@ class Page1 extends Component {
             <Row>
               <Col> <Button className="float-right" variant="outline-primary " onClick={this.callHTTP}>HTTP Call</Button>      </Col>
               <Col> <Button className="float-left" onClick={this.callHTTPS}>HTTPS Call</Button>      </Col>
+              <Col> <Button className="float-left" onClick={this.callAPIM}>APIM Call</Button>      </Col>
+
             </Row>
             <br />
             <Row>
@@ -75,6 +77,21 @@ class Page1 extends Component {
       .then(res => res.text())
       .then(res => console.log(`https ${res}`));
   };
+
+  callAPIM = () => {
+    console.log("apim")
+    axios
+      .get('https://cwpilb.azure-api.net/ilb/api/website')
+      .then(res => {
+        console.log(`${res.data}`)
+        axios
+          .get(https_add + '/api/website')
+          .then(res => this.setState({ websites: res.data }))
+          .catch(alert)
+      })
+      .catch(alert)
+  };
+
   callLBHTTP = () => {
     console.log("lb http")
     fetch('http://10.0.1.200:5001')

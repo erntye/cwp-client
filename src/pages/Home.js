@@ -22,7 +22,6 @@ class Home extends Component {
       showModalCreate: false,
       showModalDelete: false,
       showModalEdit: false,
-
     };
   }
 
@@ -103,7 +102,7 @@ class Home extends Component {
         // if (err && err.response.status === 552) {
         //   toast.error(err.response.data)
         // }
-        if (err && [550,551,552].indexOf(err.response.status) >= 0) {
+        if (err.response && [550,551,552].indexOf(err.response.status) >= 0) {
           toast.error(err.response.data)
         }
       })
@@ -119,14 +118,14 @@ class Home extends Component {
 
       })
       .catch(err => {
-        console.log(err)
-        if (err && err.response.status === 550) {
+
+        if (err.response && err.response.status === 550) {
           // toast(err.response.data)
         }
-        if (err && err.response.status === 551) {
+        if (err.response && err.response.status === 551) {
           toast(err.response.data)
         }
-        if (err && err.response.status === 552) {
+        if (err.response && err.response.status === 552) {
           toast(err.response.data)
         }
       })

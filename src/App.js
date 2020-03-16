@@ -6,6 +6,10 @@ import Page2 from "./pages/Page2";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// set axios headers globally
+import axios from 'axios'
+axios.defaults.headers.common['Ocp-Apim-Subscription-Key'] = process.env.REACT_APP_APIM_KEY;
+
 class App extends Component {
   render() {
     return (
